@@ -2,13 +2,15 @@
 	var WinH = $(window).height();
 	$('#container').css('height',WinH);
 	$('.but-box').on('mouseover',function(event){
+		event.stopPropagation();
 		$(this).css('display','none');
 		$('.buts-maker-layer').css('display','block');
 		$('.controller-buts-box').css('display','block');
 	});
 
-	$('.controller-buts-box').on('mouseout',function(){
-		// $(this).css('display','none');
+
+	$('.buts-maker-layer').on('mouseover',function(e){
+		$('.controller-buts-box').css('display','none');
 		$('.buts-maker-layer').css('display','none');
 		$('.but-box').css('display','block');
 	});
