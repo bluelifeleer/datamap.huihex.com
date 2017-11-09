@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>内乡县数据指标-显示面板</title>
+	<link rel="stylesheet" type="text/css" href="/assets/css/console.css" />
+	<script type="text/javascript" src="/assets/librarys/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="/assets/librarys/angular.min.js"></script>
+	<script type="text/javascript" src="/assets/librarys/angular-route.min.js"></script>
+	<!-- <script type="text/javascript" src="/assets/librarys/require.js"></script> -->
+	
+	<script type="text/javascript" src="/assets/librarys/echarts-2.2.7/build/dist/echarts-all.js"></script>
+	<!-- <script type="text/javascript" src="/assets/librarys/echarts.js"></script> -->
+	<script type="text/javascript" src="/assets/js/pancakemap.js"></script>
+	<script type="text/javascript" src="/assets/js/logisticsmap.js"></script>
+	<script type="text/javascript" src="/assets/js/gaugemap.js"></script>
+	<script type="text/javascript" src="/assets/js/drawchart.js"></script>
+	<script type="text/javascript" src="/assets/js/rectanglemap.js"></script>
+	<script type="text/javascript" src="/assets/js/columnarmap.js"></script>
+	<script type="text/javascript" src="/assets/js/radarmap.js"></script>
+	<script type="text/javascript" src="/assets/js/barmap.js"></script>
+	<script type="text/javascript" src="/assets/js/stand_radradarmap.js"></script>
+	<script type="text/javascript" src="/assets/js/loglinemap.js"></script>
+	<!-- <script type="text/javascript" src="/assets/librarys/echarts.min.js"></script> -->
+	<style type="text/css">
+		.datamap-list-group-box{width:100%;height:100%;padding:0;margin:0;}
+		.datamap-list-box{width:100%;height:auto;}
+		.datat-table-block{float:left;width:25%;height:260px;}
+		#div1{width:100%;height:260px;}
+		#div2{width:100%;height:260px;}
+		#div3{width:100%;height:260px;}
+		#div4{width:100%;height:260px;}
+		#div5{width:100%;height:260px;}
+		#div6{width:100%;height:260px;}
+		#div7{width:100%;height:260px;}
+		#div8{width:100%;height:260px;}
+		#div9{width:100%;height:260px;}
+		#div10{width:100%;height:260px;}
+		#div11{width:100%;height:260px;}
+		#div12{width:100%;height:260px;}
+	</style>
+</head>
+<body>
+	<div class="datamap-list-group-box">
+		<div class="datamap-list-box">
+			<div class="datat-table-block">
+				<div id="div1"></div>
+				<div class="zoom-buts" data-but-type="annular-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div2"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div3"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div4"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+		</div>
+		<div class="datamap-list-box">
+			<div class="datat-table-block">
+				<div id="div5"></div>
+				<div class="zoom-buts" data-but-type="annular-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div6"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div7"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div8"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+		</div>
+		<div class="datamap-list-box">
+			<div class="datat-table-block">
+				<div id="div9"></div>
+				<div class="zoom-buts" data-but-type="annular-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div10"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div11"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="div12"></div>
+				<div class="zoom-buts" data-but-type="columnar-map"></div>
+			</div>
+		</div>
+	</div>
+	<div class="but-box"></div>
+	<div class="buts-maker-layer"></div>
+	<div class="controller-buts-box">
+		<a href="/" class="buts-block">系统概况</a>
+		<a href="/monitor/show" class="buts-block">效果监控</a>
+		<a href="/compare/show" class="buts-block">数据对比</a>
+		<a href="/mapdata/map" class="buts-block">全景数据</a>
+	</div>
+</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.but-box').on('mouseover',function(event){
+				event.stopPropagation();
+				$(this).css('display','none');
+				$('.buts-maker-layer').css('display','block');
+				$('.controller-buts-box').css('display','block');
+			});
+
+			$('.buts-maker-layer').on('mouseover',function(e){
+				$('.controller-buts-box').css('display','none');
+				$('.buts-maker-layer').css('display','none');
+				$('.but-box').css('display','block');
+			});
+
+
+			drawchart('div1',bar_option_data(false));
+			drawchart('div2',bar_option_data(false));
+			drawchart('div3',logline_option_data(false));
+			drawchart('div4',get_standard_radar_option_data(false));
+			drawchart('div5',bar_option_data(false));
+			drawchart('div6',bar_option_data(false));
+			drawchart('div7',logline_option_data(false));
+			drawchart('div8',get_standard_radar_option_data(false));
+			drawchart('div9',gauge_option_data(false));
+			drawchart('div10',gauge_option_data(false));
+			drawchart('div11',gauge_option_data(false));
+			drawchart('div12',radar_option_data(false));
+		});
+	</script>
+</html>

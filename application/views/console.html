@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>内乡县数据指标-显示面板</title>
+	<link rel="stylesheet" type="text/css" href="/assets/css/console.css" />
+	<script type="text/javascript" src="/assets/librarys/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="/assets/librarys/angular.min.js"></script>
+	<script type="text/javascript" src="/assets/librarys/angular-route.min.js"></script>
+	<!-- <script type="text/javascript" src="/assets/librarys/require.js"></script> -->
+	
+	<script type="text/javascript" src="/assets/librarys/echarts-2.2.7/build/dist/echarts-all.js"></script>
+	<!-- <script type="text/javascript" src="/assets/librarys/echarts.js"></script> -->
+	<script type="text/javascript" src="/assets/js/pancakemap.js"></script>
+	<script type="text/javascript" src="/assets/js/logisticsmap.js"></script>
+	<script type="text/javascript" src="/assets/js/gaugemap.js"></script>
+	<script type="text/javascript" src="/assets/js/drawchart.js"></script>
+	<script type="text/javascript" src="/assets/js/rectanglemap.js"></script>
+	<script type="text/javascript" src="/assets/js/columnarmap.js"></script>
+	<script type="text/javascript" src="/assets/js/radarmap.js"></script>
+	<script type="text/javascript" src="/assets/js/barmap.js"></script>
+	<script type="text/javascript" src="/assets/js/get_shop_sales_volume.js"></script>
+	<!-- <script type="text/javascript" src="/assets/librarys/echarts.min.js"></script> -->
+</head>
+<body>
+	<div id="dashboard-blox">
+		<div class="left-box">
+			<div class="datat-table-block">
+				<div id="pancake-data-map-box"></div>
+				<div class="zoom-buts" data-but-type="pancake-map" data-but-fn="fullscreen"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="columnar-data-map-date-box"></div>
+				<div class="zoom-buts" data-but-type="columnar-date" data-but-fn="fullscreen"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="columnar-data-map-type-box"></div>
+				<div class="zoom-buts" data-but-type="columnar-map" data-but-fn="fullscreen"></div>
+			</div>
+		</div>
+		<div class="center-box">
+			<div class="datat-table-block" style="height:160px;">
+				<div id="text-data-box">
+					<div class="today-data">
+						<p style="width:100%;height:30px;line-height:30px;font-weight: bold;font-size: 20px;margin:30px 0 10px 0">今日内乡县累计农村电商销售(元)</p>
+						<p style="width:100%;height:auto;font-size: 40px;">16860</p>
+					</div>
+					<div class="twelve-month-data">
+						<p style="width:100%;height:auto;font-size: 13px;margin:30px 0 10px 0">近12个月内乡县累计扶持农村商务(元)</p>
+						<p style="font-weight: bold;font-size: 18px;">230,000,000</p>
+						<p style="width:100%;height:auto;font-size: 13px;margin:10px 0 10px 0">内乡县农村电商从业人数</p>
+						<p style="font-weight: bold;font-size: 18px;">16860</p>
+					</div>
+				</div>
+				<!-- <div class="zoom-buts" data-but-type="text-data"></div> -->
+			</div>
+			<div class="datat-table-block" style="height:400px;">
+				<div id="country-data-map-box" style="height:400px;"></div>
+				<div class="zoom-buts" data-but-type="country-map" data-but-fn="fullscreen"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="columnar-data-map-area-box"></div>
+				<div class="zoom-buts" data-but-type="radar-map" data-but-fn="fullscreen"></div>
+			</div>
+		</div>
+		<div class="right-box">
+			<div class="datat-table-block">
+				<div id="dashboard-data-map-box"></div>
+				<div class="zoom-buts" data-but-type="dashboard-map" data-but-fn="fullscreen"></div>
+			</div>
+			<div class="datat-table-block">
+				<div id="text-data-rolling-box">
+					<div class="text-data-header-box">
+						<div class="text-data-shop-name">店铺名</div>
+						<div class="text-data-shop-num">月销量</div>
+						<div class="text-data-shop-sum">月销售额</div>
+					</div>
+					<div class="text-data-body-box"></div>
+				</div>
+				<!-- <div class="zoom-buts" data-but-type="text-rolling"></div> -->
+			</div>
+			<div class="datat-table-block">
+				<div id="rectangle-data-map-box"></div>
+				<div class="zoom-buts" data-but-type="rectangle-map" data-but-fn="fullscreen"></div>
+			</div>
+		</div>
+		<div class="but-box"></div>
+		<div class="buts-maker-layer"></div>
+		<div class="controller-buts-box">
+			<a href="/" class="buts-block">系统概况</a>
+			<a href="/monitor/show" class="buts-block">效果监控</a>
+			<a href="/compare/show" class="buts-block">数据对比</a>
+			<a href="/mapdata/map" class="buts-block">全景数据</a>
+		</div>
+	</div>
+	<!-- <script type="text/javascript" src="/assets/js/console.js"></script> -->
+
+	<script type="text/javascript" src="/assets/js/main.js"></script>
+</body>
+</html>
