@@ -43,7 +43,7 @@ function rectangle_option_data (is_fullscreen){
 	    calculable : false,
 	    series : [
 	        {
-	            name:'矩形图',
+	            name:'',
 	            type:'treemap',
 	            itemStyle: {
 	                normal: {

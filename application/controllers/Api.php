@@ -84,54 +84,15 @@ class Api extends CI_Controller {
 			->set_output(json_encode($output));
 	}
 
-	public function statistics() {
-
-	}
-
 	public function shop_num() {
 		$type = $this->uri->segment(3);
 		$res = $this->api->shop_num();
 		$tmp = array();
 		$step = 0;
 		if ($res && is_array($res) && !empty($res)) {
-			for ($i = 0; $i < count($res); $i++) {
-				if ($res[$i]['town']) {
-					if ($res[$i]['town'] == '夏馆镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '师岗镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '马山口镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '湍东镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '赤眉镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '瓦亭镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '赤眉镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '王店镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '灌涨镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '板场乡') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '大桥乡') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '赵店乡') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '七里坪乡') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '余关乡') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '乍曲乡') {
-						$tmp[$res[$i]['town']] = $step++;
-					} elseif ($res[$i]['town'] == '桃溪镇') {
-						$tmp[$res[$i]['town']] = $step++;
-					} else {
-						$tmp['城关镇'] = $step++;
-					}
-				}
+			for ($i = 0; $i < count($this->neixiang_county); $i++) {
+				$aaa = $this->checkout_num($this->neixiang_county[$i], $res);
+				array_push($tmp, $aaa);
 			}
 			// var_dump($tmp);
 			$output = array(
@@ -179,6 +140,46 @@ class Api extends CI_Controller {
 			->set_output(json_encode($output));
 	}
 
+	public function statistics() {
+		$res = $this->api->statistics();
+		$tmp = array();
+		if ($res && is_array($res) && !empty($res)) {
+			for ($i = 0; $i < count($res); $i++) {
+				$res[$i]['money_back'] = floor(($res[$i]['money_back'] * 10) / 100);
+				$res[$i]['tousu'] = floor(($res[$i]['tousu'] * 10) / 100);
+				$res[$i]['buy_again'] = floor(($res[$i]['buy_again'] * 10) / 100);
+				$res[$i]['send_goods'] = floor(($res[$i]['send_goods'] * 10) / 100);
+			}
+			$tmp = array(
+				'money_back' => array('other' => intval(100 - $res[0]['money_back']), 'money_back' => $res[0]['money_back']),
+				'tousu' => array('other' => intval(100 - $res[0]['tousu']), 'tousu' => $res[0]['tousu']),
+				'buy_again' => array('other' => intval(100 - $res[0]['buy_again']), 'buy_again' => $res[0]['buy_again']),
+				'send_goods' => array('other' => intval(100 - $res[0]['send_goods']), 'send_goods' => $res[0]['send_goods']),
+			);
+		}
+		// var_dump($res);
+		$output = array(
+			'code' => 1,
+			'msg' => 'success',
+			'data' => $tmp,
+		);
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode($output));
+		// return $res[0]
+	}
+
+	private function checkout_num($str, $arr) {
+		$tmp = array();
+		$step = 0;
+		for ($i = 0; $i < count($arr); $i++) {
+			if ($arr[$i]['town'] == $str) {
+				$tmp[$arr[$i]['town']] = $step++;
+			}
+		}
+		return $tmp;
+	}
+
 	private function create_new_array($arr, $type) {
 		$tmp = array();
 		for ($i = 0; $i < count($arr); $i++) {
@@ -211,8 +212,12 @@ class Api extends CI_Controller {
 		$tmp = array();
 		if ($type == 'radar') {
 			$data = array();
-			foreach ($arr as $key => $value) {
-				array_push($tmp, array('text' => $key, 'max' => 300));
+			for ($i = 0; $i < count($arr); $i++) {
+				if (!empty($arr[$i])) {
+					foreach ($arr[$i] as $key => $value) {
+						array_push($tmp, array('text' => $key, 'max' => 100));
+					}
+				}
 			}
 			// $tmp = array()
 		} else {
@@ -228,13 +233,22 @@ class Api extends CI_Controller {
 		$tmp = array();
 		if ($type == 'radar') {
 			$data = array();
-			foreach ($arr as $key => $value) {
-				array_push($data, $value);
+			for ($i = 0; $i < count($arr); $i++) {
+				foreach ($arr[$i] as $key => $value) {
+					if (!empty($value)) {
+						array_push($data, $value);
+					}
+				}
 			}
 			$tmp = array(array('name' => '内乡县', 'value' => $data));
 		} else {
-			foreach ($arr as $key => $value) {
-				array_push($tmp, array('name' => $key, 'value' => $value));
+			for ($i = 0; $i < count($arr); $i++) {
+				if (!empty($arr[$i])) {
+					foreach ($arr[$i] as $key => $value) {
+
+						array_push($tmp, array('name' => $key, 'value' => $value));
+					}
+				}
 			}
 		}
 

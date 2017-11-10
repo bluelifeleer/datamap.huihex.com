@@ -90,21 +90,21 @@ function logline_option_data(is_fullscreen){
                 ]
             }
 	       },
-	       // {
-	       //     name: "夏馆镇",
-	       //     type: "line",
-	       //     data: [50, 58, 64, 80, 110, 40, 268, 330, 400],
-	       //     markPoint : {
-	       //          data : [
-	       //              {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
-	       //          ]
-	       //      },
-	       //      markLine : {
-	       //          data : [
-	       //              {type : 'average', name : '平均值'}
-	       //          ]
-	       //      }
-	       // }
+	       {
+	           name: "夏馆镇",
+	           type: "line",
+	           data: [50, 58, 64, 80, 110, 40, 268, 330, 400],
+	           markPoint : {
+	                data : [
+	                    {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+	                ]
+	            },
+	            markLine : {
+	                data : [
+	                    {type : 'average', name : '平均值'}
+	                ]
+	            }
+	       }
 	   ]
 	};
                 

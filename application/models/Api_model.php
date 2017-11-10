@@ -52,4 +52,12 @@ class Api_model extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query && $query->num_rows() > 0 ? $query->result_array() : array();
 	}
+
+	public function statistics() {
+		$this->db->select('sum(money_back) as money_back,sum(tousu) as tousu,sum(buy_again) as buy_again,sum(send_goods) as send_goods');
+		$this->db->like('county', '内乡');
+		$this->db->from('tb_shop');
+		$query = $this->db->get();
+		return $query && $query->num_rows() > 0 ? $query->result_array() : array();
+	}
 }

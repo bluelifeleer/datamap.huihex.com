@@ -15,6 +15,8 @@ function radar_option_data(is_fullscreen){
 		}
 	});
 
+	console.log(data);
+
 	if(is_fullscreen){
 		radius = 220;
 	}else{
