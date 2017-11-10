@@ -1,8 +1,30 @@
-function bar_option_data(is_fullscreen){
-
-    var data,fields;
+function bar_option_data(type,is_fullscreen){
+    var data,fields,url,title,name;
+    switch(type){
+        case 'shop-num-count':
+            url = '/api/shop_num/count';
+            title = '内乡县（各乡镇）店铺总数统计（个）';
+            name = '店铺数';
+        break;
+        case 'shop-job-peoples':
+            url = '/api/shop_num/peoples';
+            title = '内乡县（各乡镇）电商从业人数统计（人次）';
+            name = '从业人数';
+        break;
+        case 'send-goods-date':
+            url = '/api/shop_num/send_date';
+            title = '内乡县（各乡镇）平均发单时间统计（天）';
+            name = '发单时间';
+        break;
+        default:
+            url = '/api/bar';
+            title = '内乡五强行业单店铺销售额全国水平（元）';
+            name = '销售额';
+        break;
+    }
+    
     $.ajax({
-        url:'/api/bar',
+        url:url,
         type:'GET',
         async:false,
         success:function(res){
@@ -22,7 +44,7 @@ function bar_option_data(is_fullscreen){
             x:'center',
             // text: '手机占有率',
             // subtext: '虚构数据'
-            text: '内乡五强行业单店铺销售额全国水平',
+            text: title,
             subtext: '',
             textStyle: {
                 fontSize: 12,
@@ -83,7 +105,7 @@ function bar_option_data(is_fullscreen){
     ],
     series : [
         {
-            name:'销售额',
+            name:name,
             type:'bar',
             data:data,
             markPoint : {

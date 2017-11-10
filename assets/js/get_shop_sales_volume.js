@@ -1,4 +1,4 @@
-function get_shop_sales_volume(){
+function get_shop_sales_volume(el,player){
 	$.ajax({
 		url:'/api/sales_volume',
 		type:'GET',
@@ -17,9 +17,11 @@ function get_shop_sales_volume(){
 			}
 			var html = '<div class="data-list-group">'+tmp+'</div>';
 			// console.log($('.text-data-body-box'));
-			$('.text-data-body-box').html(html);
+			$(el).html(html);
 
-			startMove();
+			if(player){
+				startMove();
+			}
 		},
 		error:function(err){
 			console.error(err);

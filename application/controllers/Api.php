@@ -69,8 +69,8 @@ class Api extends CI_Controller {
 				// 	continue;
 				// } else {
 				$tmp[$i]['shop_name'] = $res[$i]['shop_name'];
-				$tmp[$i]['num'] = $res[$i]['num'] ? $res[$i]['num'] : $this->num();
-				$tmp[$i]['price'] = $res[$i]['price'] ? sprintf('%.2f', $res[$i]['price']) : sprintf('%.2f', $this->price());
+				$tmp[$i]['num'] = $res[$i]['num'] ? $res[$i]['num'] : $this->num(100, 999999);
+				$tmp[$i]['price'] = $res[$i]['price'] ? sprintf('%.2f', $res[$i]['price']) : sprintf('%.2f', $this->price(1000, 99999999));
 				// }
 			}
 		}
@@ -87,20 +87,24 @@ class Api extends CI_Controller {
 	public function shop_num() {
 		$type = $this->uri->segment(3);
 		$res = $this->api->shop_num();
+		// var_dump($res);
 		$tmp = array();
 		$step = 0;
+		$output = array();
+		$fields = array();
+		$datas = array();
 		if ($res && is_array($res) && !empty($res)) {
 			for ($i = 0; $i < count($this->neixiang_county); $i++) {
 				$aaa = $this->checkout_num($this->neixiang_county[$i], $res);
 				array_push($tmp, $aaa);
 			}
-			// var_dump($tmp);
+			$this->formate_data($tmp, $type, $fields, $datas);
 			$output = array(
 				'code' => 1,
 				'msg' => 'success',
 				'data' => array(
-					'fields' => $this->checkout_fileds($tmp, $type),
-					'data' => $this->mix_arr($tmp, $type),
+					'fields' => $fields,
+					'data' => $datas,
 				),
 			);
 		} else {
@@ -169,6 +173,23 @@ class Api extends CI_Controller {
 		// return $res[0]
 	}
 
+	public function quarter_trade_quota() {
+		$fields = $this->create_data('month');
+		$datas = $this->create_data('price');
+		$tmp = array(
+			'fields' => $fields,
+			'data' => $datas,
+		);
+		$output = array(
+			'code' => 1,
+			'msg' => 'success',
+			'data' => $tmp,
+		);
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode($output));
+	}
+
 	private function checkout_num($str, $arr) {
 		$tmp = array();
 		$step = 0;
@@ -180,13 +201,68 @@ class Api extends CI_Controller {
 		return $tmp;
 	}
 
+	private function formate_data($data, $type, &$fields, &$result) {
+		switch ($type) {
+		case 'count':
+			for ($i = 0; $i < count($data); $i++) {
+				foreach ($data[$i] as $key => $value) {
+					array_push($fields, $key);
+					array_push($result, $value);
+				}
+			}
+			break;
+		case 'peoples':
+			for ($i = 0; $i < count($data); $i++) {
+				foreach ($data[$i] as $key => $value) {
+					array_push($fields, $key);
+					array_push($result, $this->num(10, 1000));
+				}
+			}
+			break;
+		case 'send_date':
+			for ($i = 0; $i < count($data); $i++) {
+				foreach ($data[$i] as $key => $value) {
+					array_push($fields, $key);
+					array_push($result, $this->num(0.5, 3.5));
+				}
+			}
+			break;
+		default:
+			$fields = $this->checkout_fileds($data, $type);
+			$result = $this->mix_arr($data, $type);
+			break;
+		}
+	}
+
+	private function create_data($type) {
+		$new = date('m', time());
+		$tmp = array();
+
+		switch ($type) {
+		case 'month':
+			for ($i = $new; $i > intval($new - 6); $i--) {
+				array_push($tmp, $i . '月');
+			}
+			break;
+		default:
+			$tmp['min'] = array();
+			$tmp['max'] = array();
+			for ($i = 0; $i < intval($new - 5); $i++) {
+				array_push($tmp['min'], $this->num(1000, 999999));
+				array_push($tmp['max'], $this->num(100000, 10000000));
+			}
+			break;
+		}
+		return $tmp;
+	}
+
 	private function create_new_array($arr, $type) {
 		$tmp = array();
 		for ($i = 0; $i < count($arr); $i++) {
 			if ($type == 'fields') {
-				array_push($tmp, array('value' => $this->num(), 'name' => $arr[$i]['category']));
+				array_push($tmp, array('value' => $this->num(100, 999999), 'name' => $arr[$i]['category']));
 			} else {
-				array_push($tmp, array('value' => $this->num(), 'name' => $arr[$i]['town']));
+				array_push($tmp, array('value' => $this->num(100, 999999), 'name' => $arr[$i]['town']));
 			}
 		}
 		return $tmp;
@@ -200,12 +276,12 @@ class Api extends CI_Controller {
 		return $tmp;
 	}
 
-	private function num() {
-		return rand(100, 99999999);
+	private function num($min, $max) {
+		return rand($min, $max);
 	}
 
-	private function price() {
-		return rand(100, 99999999);
+	private function price($min, $max) {
+		return rand($min, $max);
 	}
 
 	private function checkout_fileds($arr, $type) {

@@ -36,14 +36,14 @@
 	// var draw = setInterval(function(){
 	drawchart('pancake-data-map-box', getpancake_option_data(false));
 	drawchart('columnar-data-map-date-box', columnar_option_data(false));
-	drawchart('columnar-data-map-type-box', bar_option_data(false));
+	drawchart('columnar-data-map-type-box', bar_option_data('',false));
 	drawchart('country-data-map-box', logistics_option_data(false));
 	drawchart('columnar-data-map-area-box', radar_option_data(false));
 	drawchart('dashboard-data-map-box', gauge_option_data(false));
 	drawchart('rectangle-data-map-box', rectangle_option_data(false));
 	// }, 2000);
 
-	get_shop_sales_volume();
+	get_shop_sales_volume('.text-data-body-box',true);
 
 	// 
 	function createFullScreen(type) {
@@ -65,7 +65,7 @@
 				drawchart('data-charts-masklayer', logistics_option_data(true));
 				break;
 			case 'columnar-map':
-				drawchart('data-charts-masklayer', bar_option_data(true));
+				drawchart('data-charts-masklayer', bar_option_data('',true));
 				break;
 			case 'columnar-date':
 				drawchart('data-charts-masklayer', columnar_option_data(true));
