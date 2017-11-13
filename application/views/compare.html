@@ -90,35 +90,36 @@
 		width: 100%;
 		height: auto;
 		position:relative;
+		overflow: auto;
 	}
 	</style>
 </head>
 
 <body>
 	<div id="left">
-		<div class="datat-table-block">
+		<div class="datat-table-block" style="height:280px;">
 			<div id="div1"></div>
 			<div class="zoom-buts" data-but-type="annular-map" data-box-type=""></div>
 		</div>
-		<div class="datat-table-block">
+		<div class="datat-table-block" style="height:280px;">
 			<div id="div2"></div>
 			<div class="zoom-buts" data-but-type="columnar-map" data-box-type=""></div>
 		</div>
-		<div class="datat-table-block">
+		<div class="datat-table-block" style="height:280px;">
 			<div id="shop-num-count-box"></div>
 			<div class="zoom-buts" data-but-type="columnar-map" data-box-type="shop-num-count"></div>
 		</div>
 	</div>
 	<div id="center">
-		<div class="datat-table-block">
+		<div class="datat-table-block" style="height:280px;">
 			<div id="shop-send-goods-date"></div>
 			<div class="zoom-buts" data-but-type="columnar-map" data-box-type="send-goods-date"></div>
 		</div>
-		<div class="datat-table-block">
+		<div class="datat-table-block" style="height:280px;">
 			<div id="quarter-trade-quota"></div>
 			<div class="zoom-buts" data-but-type="line-map" data-box-type="shop-job-peoples"></div>
 		</div>
-		<div class="datat-table-block">
+		<div class="datat-table-block" style="height:280px;">
 			<div id="shop-job-peoples-count"></div>
 			<div class="zoom-buts" data-but-type="columnar-map" data-box-type=""></div>
 		</div>
@@ -144,6 +145,10 @@
 </body>
 <script type="text/javascript">
 $(function() {
+	var winH = $(document).height();
+	$('.datat-table-block').css('height',parseInt(winH/3));
+	$('#data-lists-box').css('height',parseInt(winH-30));
+
 	$('.datat-table-block').on('mouseover', function() {
 		$(this).find('.zoom-buts').css('display', 'block');
 	});
