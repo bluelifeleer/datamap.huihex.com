@@ -98,29 +98,29 @@
 	<div id="left">
 		<div class="datat-table-block">
 			<div id="div1"></div>
-			<div class="zoom-buts" data-but-type="annular-map"></div>
+			<div class="zoom-buts" data-but-type="annular-map" data-box-type=""></div>
 		</div>
 		<div class="datat-table-block">
 			<div id="div2"></div>
-			<div class="zoom-buts" data-but-type="columnar-map"></div>
+			<div class="zoom-buts" data-but-type="columnar-map" data-box-type=""></div>
 		</div>
 		<div class="datat-table-block">
 			<div id="shop-num-count-box"></div>
-			<div class="zoom-buts" data-but-type="columnar-map"></div>
+			<div class="zoom-buts" data-but-type="columnar-map" data-box-type="shop-num-count"></div>
 		</div>
 	</div>
 	<div id="center">
 		<div class="datat-table-block">
 			<div id="shop-send-goods-date"></div>
-			<div class="zoom-buts" data-but-type="columnar-map"></div>
+			<div class="zoom-buts" data-but-type="columnar-map" data-box-type="send-goods-date"></div>
 		</div>
 		<div class="datat-table-block">
 			<div id="quarter-trade-quota"></div>
-			<div class="zoom-buts" data-but-type="line-map"></div>
+			<div class="zoom-buts" data-but-type="line-map" data-box-type="shop-job-peoples"></div>
 		</div>
 		<div class="datat-table-block">
 			<div id="shop-job-peoples-count"></div>
-			<div class="zoom-buts" data-but-type="columnar-map"></div>
+			<div class="zoom-buts" data-but-type="columnar-map" data-box-type=""></div>
 		</div>
 	</div>
 	<div id="right">
@@ -155,7 +155,8 @@ $(function() {
 
 	$('.zoom-buts').on('click', function() {
 		var butType = $(this).attr('data-but-type');
-		createFullScreen(butType);
+		var box_type = $(this).attr('data-box-type');
+		createFullScreen(butType,box_type);
 		// alert();
 	});
 
@@ -185,7 +186,7 @@ $(function() {
 });
 
 
-function createFullScreen(type) {
+function createFullScreen(type,box_type) {
 	var WinW = $(document).width();
 	var WinH = $(document).height();
 	var masklayer = document.createElement('div');
@@ -204,7 +205,7 @@ function createFullScreen(type) {
 			drawchart('data-charts-masklayer', logistics_option_data(true));
 			break;
 		case 'columnar-map':
-			drawchart('data-charts-masklayer', bar_option_data('',true));
+			drawchart('data-charts-masklayer', bar_option_data(box_type,true));
 			break;
 		case 'columnar-date':
 			drawchart('data-charts-masklayer', columnar_option_data(true));
